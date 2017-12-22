@@ -93,7 +93,7 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     XCTAssertNil(unflushedLayer.animationKeys())
   }
 
-  func testDoesImplicitlyAnimate() {
+  func testFlushedLayerDoesImplicitlyAnimate() {
     let layer = CALayer()
     window.layer.addSublayer(layer)
     RunLoop.main.run(mode: .defaultRunLoopMode, before: .distantFuture)
@@ -109,11 +109,15 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     }
   }
 
+  // Verifies the somewhat counter-intuitive fact that CATransaction's animation duration always
+  // takes precedence over UIView's animation duration. This means that animating a headless layer
+  // using UIView animation APIs may not result in the expected traits.
   func testImplicitlyAnimatesInUIViewAnimateBlockWithCATransactionDuration() {
     let layer = CALayer()
     window.layer.addSublayer(layer)
     CATransaction.flush()
-    UIView.animate(withDuration: 0.8, animations: {
+
+    UIView.animate(withDuration: CATransaction.animationDuration() + 0.1, animations: {
       layer.opacity = 0.5
     })
 
@@ -137,45 +141,6 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     CATransaction.commit()
 
     XCTAssertNil(layer.animationKeys())
-  }
-
-  func testCATransactionTimingTakesPrecedenceOverUIViewTimingInside() {
-    let layer = CALayer()
-    window.layer.addSublayer(layer)
-    CATransaction.flush()
-
-    UIView.animate(withDuration: 0.5) {
-      layer.opacity = 0.5
-    }
-
-    XCTAssert(layer.animation(forKey: "opacity") is CABasicAnimation)
-    if let animation = layer.animation(forKey: "opacity") as? CABasicAnimation {
-      XCTAssertEqual(animation.keyPath, "opacity")
-      XCTAssertEqualWithAccuracy(animation.duration,
-                                 CATransaction.animationDuration(),
-                                 accuracy: 0.0001)
-    }
-  }
-
-  // Verifies the somewhat counter-intuitive fact that CATransaction's animation duration always
-  // takes precedence over UIView's animation duration. This means that animating a headless layer
-  // using UIView animation APIs may not result in the expected traits.
-  func testCATransactionTimingTakesPrecedenceOverUIViewTimingOutside() {
-    let layer = CALayer()
-    window.layer.addSublayer(layer)
-    CATransaction.flush()
-
-    UIView.animate(withDuration: CATransaction.animationDuration() + 0.1) {
-      layer.opacity = 0.5
-    }
-
-    XCTAssert(layer.animation(forKey: "opacity") is CABasicAnimation)
-    if let animation = layer.animation(forKey: "opacity") as? CABasicAnimation {
-      XCTAssertEqual(animation.keyPath, "opacity")
-      XCTAssertEqualWithAccuracy(animation.duration,
-                                 CATransaction.animationDuration(),
-                                 accuracy: 0.0001)
-    }
   }
 
   func testDoesImplicitlyAnimateInUIViewAnimateBlock() {
