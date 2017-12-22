@@ -51,7 +51,9 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     XCTAssert(view.layer.animation(forKey: "opacity") is CABasicAnimation)
     if let animation = view.layer.animation(forKey: "opacity") as? CABasicAnimation {
       XCTAssertEqual(animation.keyPath, "opacity")
-      XCTAssertEqual(animation.duration, CATransaction.animationDuration() + 0.1)
+      XCTAssertEqualWithAccuracy(animation.duration,
+                                 CATransaction.animationDuration() + 0.1,
+                                 accuracy: 0.0001)
     }
   }
 
@@ -64,7 +66,9 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     XCTAssert(view.layer.animation(forKey: "opacity") is CABasicAnimation)
     if let animation = view.layer.animation(forKey: "opacity") as? CABasicAnimation {
       XCTAssertEqual(animation.keyPath, "opacity")
-      XCTAssertEqual(animation.duration, CATransaction.animationDuration() + 0.1)
+      XCTAssertEqualWithAccuracy(animation.duration,
+                                 CATransaction.animationDuration() + 0.1,
+                                 accuracy: 0.0001)
     }
   }
 
@@ -99,7 +103,9 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     XCTAssert(layer.animation(forKey: "opacity") is CABasicAnimation)
     if let animation = layer.animation(forKey: "opacity") as? CABasicAnimation {
       XCTAssertEqual(animation.keyPath, "opacity")
-      XCTAssertEqual(animation.duration, CATransaction.animationDuration())
+      XCTAssertEqualWithAccuracy(animation.duration,
+                                 CATransaction.animationDuration(),
+                                 accuracy: 0.0001)
     }
   }
 
@@ -114,7 +120,9 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     XCTAssert(layer.animation(forKey: "opacity") is CABasicAnimation)
     if let animation = layer.animation(forKey: "opacity") as? CABasicAnimation {
       XCTAssertEqual(animation.keyPath, "opacity")
-      XCTAssertEqual(animation.duration, CATransaction.animationDuration())
+      XCTAssertEqualWithAccuracy(animation.duration,
+                                 CATransaction.animationDuration(),
+                                 accuracy: 0.0001)
     }
   }
 
@@ -143,7 +151,9 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     XCTAssert(layer.animation(forKey: "opacity") is CABasicAnimation)
     if let animation = layer.animation(forKey: "opacity") as? CABasicAnimation {
       XCTAssertEqual(animation.keyPath, "opacity")
-      XCTAssertEqual(animation.duration, CATransaction.animationDuration())
+      XCTAssertEqualWithAccuracy(animation.duration,
+                                 CATransaction.animationDuration(),
+                                 accuracy: 0.0001)
     }
   }
 
@@ -162,7 +172,9 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     XCTAssert(layer.animation(forKey: "opacity") is CABasicAnimation)
     if let animation = layer.animation(forKey: "opacity") as? CABasicAnimation {
       XCTAssertEqual(animation.keyPath, "opacity")
-      XCTAssertEqual(animation.duration, CATransaction.animationDuration())
+      XCTAssertEqualWithAccuracy(animation.duration,
+                                 CATransaction.animationDuration(),
+                                 accuracy: 0.0001)
     }
   }
 
@@ -178,7 +190,9 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     XCTAssert(layer.animation(forKey: "opacity") is CABasicAnimation)
     if let animation = layer.animation(forKey: "opacity") as? CABasicAnimation {
       XCTAssertEqual(animation.keyPath, "opacity")
-      XCTAssertEqual(animation.duration, CATransaction.animationDuration())
+      XCTAssertEqualWithAccuracy(animation.duration,
+                                 CATransaction.animationDuration(),
+                                 accuracy: 0.0001)
     }
   }
 
@@ -196,7 +210,9 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     XCTAssert(layer.animation(forKey: "opacity") is CABasicAnimation)
     if let animation = layer.animation(forKey: "opacity") as? CABasicAnimation {
       XCTAssertEqual(animation.keyPath, "opacity")
-      XCTAssertEqual(animation.duration, CATransaction.animationDuration())
+      XCTAssertEqualWithAccuracy(animation.duration,
+                                 CATransaction.animationDuration(),
+                                 accuracy: 0.0001)
     }
   }
 
@@ -212,7 +228,9 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     XCTAssert(layer.animation(forKey: "opacity") is CABasicAnimation)
     if let animation = layer.animation(forKey: "opacity") as? CABasicAnimation {
       XCTAssertEqual(animation.keyPath, "opacity")
-      XCTAssertEqual(animation.duration, CATransaction.animationDuration())
+      XCTAssertEqualWithAccuracy(animation.duration,
+                                 CATransaction.animationDuration(),
+                                 accuracy: 0.0001)
     }
   }
 
@@ -266,7 +284,7 @@ class HeadlessLayerImplicitAnimationTests: XCTestCase {
     XCTAssert(layer.animation(forKey: "opacity") is CABasicAnimation)
     if let animation = layer.animation(forKey: "opacity") as? CABasicAnimation {
       XCTAssertEqual(animation.keyPath, "opacity")
-      XCTAssertEqual(animation.duration, traits.duration)
+      XCTAssertEqualWithAccuracy(animation.duration, traits.duration, accuracy: 0.0001)
     }
   }
 
